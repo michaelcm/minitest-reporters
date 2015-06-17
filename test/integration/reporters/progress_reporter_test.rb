@@ -6,7 +6,7 @@ module MinitestReportersTest
       fixtures_directory = File.expand_path('../../../fixtures', __FILE__)
       test_filename = File.join(fixtures_directory, 'progress_test.rb')
       output = `ruby #{test_filename} 2>&1`
-      puts ENV
+      puts "#{ENV}"
       assert_match /ERROR(\033\[0m)*\["test_error"/, output, 'Errors should be displayed'
       assert_match /FAIL(\033\[0m)*\["test_failure"/, output, 'Failures should be displayed'
       assert_match /SKIP(\033\[0m)*\["test_skip"/, output, 'Skipped tests should be displayed'
