@@ -4,8 +4,7 @@ module Minitest
       module Code
 
         def self.color?
-          puts ENV['TERM']
-          color_terminal = !!(ENV['TERM'].to_s =~ /(color|rxvt|xterm)/i)
+          color_terminal = !!(ENV['TERM'].to_s =~ /(color|rxvt)/i)
           $stdout.tty? || color_terminal
         end
 
