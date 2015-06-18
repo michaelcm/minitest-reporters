@@ -1,4 +1,5 @@
 require_relative "../../test_helper"
+require_relative '../../../lib/minitest/reporters/ansi'
 
 module MinitestReportersTest
   class ProgressReporterTest < TestCase
@@ -6,6 +7,7 @@ module MinitestReportersTest
       fixtures_directory = File.expand_path('../../../fixtures', __FILE__)
       test_filename = File.join(fixtures_directory, 'progress_test.rb')
       output = `ruby #{test_filename} 2>&1`
+      output = Minitest::Reporters::ANSI::Code.stripColor(output)
       assert_match 'ERROR["test_error"', output, 'Errors should be displayed'
       assert_match 'FAIL["test_failure"', output, 'Failures should be displayed'
       assert_match 'SKIP["test_skip', output, 'Skipped tests should be displayed'
@@ -14,6 +16,7 @@ module MinitestReportersTest
       fixtures_directory = File.expand_path('../../../fixtures', __FILE__)
       test_filename = File.join(fixtures_directory, 'progress_detailed_skip_test.rb')
       output = `ruby #{test_filename} 2>&1`
+      output = Minitest::Reporters::ANSI::Code.stripColor(output)
       assert_match 'ERROR["test_error"', output, 'Errors should be displayed'
       assert_match 'FAIL["test_failure"', output, 'Failures should be displayed'
       refute_match 'SKIP["test_skip', output, 'Skipped tests should not be displayed'

@@ -6,6 +6,13 @@ module Minitest
         def self.color?
           color_terminal = !!(ENV['TERM'].to_s =~ /(color|rxvt|xterm)/i)
           $stdout.tty? || color_terminal
+          true
+        end
+
+        def self.stripColor( input )
+          input.scan(/\033\[([0-9]+);([0-9]+);([0-9]+)m(.+?)\033\[0m|([^\033]+)/m).inject('') do |str, match|
+            str << (match[3] || match[4])
+          end
         end
 
         if color?
